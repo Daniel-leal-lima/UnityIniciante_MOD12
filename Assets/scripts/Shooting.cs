@@ -20,16 +20,16 @@ public class Shooting : MonoBehaviour
         {
             equippedWeapon = inventoryWeapon[0];
         }
-        if (Input.GetKeyDown("2"))
-        {
-            equippedWeapon = inventoryWeapon[1];
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            equippedWeapon = inventoryWeapon[3];
-        }
+        //if (Input.GetKeyDown("2"))
+        //{
+        //    equippedWeapon = inventoryWeapon[1];
+        //}
+        //if (Input.GetKeyDown("3"))
+        //{
+        //    equippedWeapon = inventoryWeapon[3];
+        //}
 
-        if (Input.GetKeyDown("space") && lastShotTime + equippedWeapon.fireRate < Time.time)
+        if (Input.GetMouseButton(0) && lastShotTime + equippedWeapon.fireRate < Time.time)
         {
             lastShotTime = Time.time;
             if (equippedWeapon.projectyleType.Equals(ProjectileType.Travel))

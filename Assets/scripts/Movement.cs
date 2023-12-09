@@ -8,50 +8,48 @@ public class Movement : MonoBehaviour
     [SerializeField] float maxCameraDistanceX;
     [SerializeField] float maxCameraDistanceZ;
     [SerializeField] float minCameraDistanceZ;
-    [SerializeField] Transform gameCamera;
+    //[SerializeField] Transform gameCamera;
 
     private void Update()
     {
-        //Vector2 move = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
 
         if (Input.GetKey("a"))
         {
             MoveObject(transform, Vector3.left);
-            if(Mathf.Abs(transform.position.x - gameCamera.position.x) > maxCameraDistanceX)
-            {
-                MoveObject(gameCamera, Vector3.left);
-            }
+            //if(Mathf.Abs(transform.position.x - gameCamera.position.x) > maxCameraDistanceX)
+            //{
+            //    MoveObject(gameCamera, Vector3.left);
+            //}
         }
 
         if (Input.GetKey("w"))
         {
             MoveObject(transform, Vector3.forward);
-            if (Mathf.Abs(transform.position.z - gameCamera.position.z) > maxCameraDistanceZ)
-            {
-                MoveObject(gameCamera, Vector3.forward);
-            }
+            //if (Mathf.Abs(transform.position.z - gameCamera.position.z) > maxCameraDistanceZ)
+            //{
+            //    MoveObject(gameCamera, Vector3.forward);
+            //}
         }
 
         if (Input.GetKey("d"))
         {
             MoveObject(transform, Vector3.right);
-            if (Mathf.Abs(transform.position.x - gameCamera.position.x) > maxCameraDistanceX)
-            {
-                MoveObject(gameCamera, Vector3.right);
-            }
+            //if (Mathf.Abs(transform.position.x - gameCamera.position.x) > maxCameraDistanceX)
+            //{
+            //    MoveObject(gameCamera, Vector3.right);
+            //}
         }
 
         if (Input.GetKey("s"))
         {
             MoveObject(transform, Vector3.back);
-            if (Mathf.Abs(transform.position.z - gameCamera.position.z) > minCameraDistanceZ)
-            {
-                MoveObject(gameCamera, Vector3.back);
-            }
+            //if (Mathf.Abs(transform.position.z - gameCamera.position.z) > minCameraDistanceZ)
+            //{
+            //    MoveObject(gameCamera, Vector3.back);
+            //}
         }
         LookAtMouse();
     }
-
 
     void MoveObject(Transform transform, Vector3 direction)
     {

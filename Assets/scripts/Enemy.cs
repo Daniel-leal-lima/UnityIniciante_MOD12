@@ -2,23 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Pawn
 {
-    [SerializeField] float life;
+    [SerializeField] GameObjectRuntimeSet playerRuntimeSet;
     [SerializeField] float speed;
-    GameObject target;
-    public void SufferDamage(float damage)
+    private Animator anim;
+    private GameObject target;
+    private EnemyState currentState;
+    enum EnemyState { Walk, Attack, idle }
+
+    private void Awake()
     {
-        life -= damage;
-        if(life <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        //Get Player
+        target = playerRuntimeSet.GetItemIndex(0);
+        anim = GetComponent<Animator>();
+
     }
+
     private void Update()
     {
-        target = GameObject.Find("MainCharacter");
-        transform.LookAt(target.transform);
-        target.transform.position += target.transform.forward * speed * Time.deltaTime;
+        UpdateState();
+        if (currentState.Equals(EnemyState.idle)) return;
+        else if (currentState.Equals(EnemyState.Walk))
+        {
+            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position);
+            Vector3 direction = target.transform.position - transform.position;
+            transform.position += direction * speed * Time.deltaTime;
+        }
+        else
+        {
+            transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position);
+            anim.SetTrigger("attack");
+        }
+    }
+
+    void UpdateState()
+    {
+        if (target != null)
+        {
+            float distFromPlayer = Vector3.Distance(transform.position, target.transform.position);
+            if (distFromPlayer <= 1.5f)
+            {
+                currentState = EnemyState.Attack;
+            }
+            else
+            {
+                currentState = EnemyState.Walk;
+            }
+        }
+        else
+        {
+            currentState = EnemyState.idle;
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Player player))
+        {
+            player.SufferDamage(25);
+        }
     }
 }
